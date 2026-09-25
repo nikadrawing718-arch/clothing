@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>បុរាណខ្មែរ Shop - Khmer Traditional Clothes Shop</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Khmer Font: Kantumruy Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            50: '#fdfbf7',
+                            100: '#f9f3e6',
+                            300: '#e5ca85',
+                            500: '#d4af37',
+                            600: '#b8860b',
+                            700: '#8b6508',
+                        },
+                        khmerbg: '#fcfbf7'
+                    },
+                    fontFamily: {
+                        khmer: ['"Kantumruy Pro"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            background-color: #fcfbf7;
+            color: #2c2c2c;
+            overflow-x: hidden;
+        }
+
+        .category-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .category-card.active {
+            border-color: #b8860b !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 10px 25px -5px rgba(184, 134, 11, 0.2), 0 8px 10px -6px rgba(184, 134, 11, 0.1);
+            transform: translateX(4px);
+        }
+
+        .nav-link.active-nav {
+            color: #b8860b !important;
+            border-bottom-color: #b8860b !important;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.55) 100%);
+        }
+    </style>
+</head>
+<body class="bg-khmerbg min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="javascript:void(0)" onclick="navigateTo('home')" class="text-2xl sm:text-3xl font-bold text-gold-600 tracking-wide hover:opacity-90 transition">
+                        បុរាណខ្មែរ Shop
+                    </a>
+                </div>
+
+                <nav class="hidden md:flex space-x-6 lg:space-x-8">
+                    <a href="javascript:void(0)" id="nav-home" onclick="navigateTo('home')" class="nav-link text-gray-800 font-semibold hover:text-gold-600 transition duration-200 py-1 border-b-2 border-transparent hover:border-gold-600 text-base active-nav">ទំព័រដើម</a>
+                    <a href="javascript:void(0)" id="nav-men" onclick="navigateTo('men')" class="nav-link text-gray-800 font-semibold hover:text-gold-600 transition duration-200 py-1 border-b-2 border-transparent hover:border-gold-600 text-base">ឈុតបុរស</a>
+                    <a href="javascript:void(0)" id="nav-women" onclick="navigateTo('women')" class="nav-link text-gray-800 font-semibold hover:text-gold-600 transition duration-200 py-1 border-b-2 border-transparent hover:border-gold-600 text-base">ឈុតនារី</a>
+                    <a href="javascript:void(0)" id="nav-wedding" onclick="navigateTo('wedding')" class="nav-link text-gray-800 font-semibold hover:text-gold-600 transition duration-200 py-1 border-b-2 border-transparent hover:border-gold-600 text-base">ឈុតអាពាហ៍ពិពាហ៍</a>
+                    <a href="javascript:void(0)" id="nav-contact" onclick="navigateTo('contact')" class="nav-link text-gray-800 font-semibold hover:text-gold-600 transition duration-200 py-1 border-b-2 border-transparent hover:border-gold-600 text-base">ទំនាក់ទំនង</a>
+                </nav>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-gold-600 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-4 space-y-2">
+            <a href="javascript:void(0)" onclick="navigateTo('home')" class="block py-2 text-gray-800 font-semibold hover:text-gold-600">ទំព័រដើម</a>
+            <a href="javascript:void(0)" onclick="navigateTo('men')" class="block py-2 text-gray-800 font-semibold hover:text-gold-600">ឈុតបុរស</a>
+            <a href="javascript:void(0)" onclick="navigateTo('women')" class="block py-2 text-gray-800 font-semibold hover:text-gold-600">ឈុតនារី</a>
+            <a href="javascript:void(0)" onclick="navigateTo('wedding')" class="block py-2 text-gray-800 font-semibold hover:text-gold-600">ឈុតអាពាហ៍ពិពាហ៍</a>
+            <a href="javascript:void(0)" onclick="navigateTo('contact')" class="block py-2 text-gray-800 font-semibold hover:text-gold-600">ទំនាក់ទំនង</a>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section id="hero-banner" class="relative bg-cover bg-center h-[380px] sm:h-[430px] flex items-center justify-center text-center px-4" 
+             style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Ankor_Wat_temple.jpg/1280px-Ankor_Wat_temple.jpg');">
+        
+        <div class="absolute inset-0 hero-overlay"></div>
+
+        <div class="relative z-10 max-w-3xl w-full mx-auto px-2">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 tracking-wide drop-shadow-md">
+                រំលេចសម្រស់បែបបុរាណខ្មែរ
+            </h1>
+            <p class="text-sm sm:text-base md:text-lg text-gray-100 mb-8 font-light drop-shadow-sm">
+                សម្លៀកបំពាក់បុរាណ ជួល និងលក់ គ្រប់សម័យកាល គុណភាពខ្ពស់
+            </p>
+
+            <form id="search-form" onsubmit="handleSearch(event)" class="max-w-xl mx-auto">
+                <div class="bg-white rounded-full p-1.5 flex items-center shadow-2xl transition focus-within:ring-2 focus-within:ring-gold-500">
+                    <input type="text" 
+                           id="search-input"
+                           placeholder="ស្វែងរក ឈុតអាពាហ៍ពិពាហ៍, ឈុតសម័យអង្គរ..." 
+                           class="w-full px-5 py-2.5 text-gray-700 bg-transparent rounded-full focus:outline-none text-sm sm:text-base placeholder-gray-400">
+                    <button type="submit" 
+                            class="bg-gold-600 hover:bg-gold-700 text-white font-medium px-6 py-2.5 rounded-full transition duration-200 flex-shrink-0 text-sm sm:text-base flex items-center space-x-2">
+                        <span>ស្វែងរក</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full flex-grow">
+        
+        <!-- Category Selection Section -->
+        <div id="category-selection-section">
+            <div class="text-center mb-8 sm:mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight inline-block relative pb-2">
+                    ជ្រើសរើសតាមប្រភេទ
+                    <span class="block w-14 h-1 bg-gold-600 rounded-full mx-auto mt-2"></span>
+                </h2>
+            </div>
+
+            <!-- Vertical Category List -->
+            <div class="max-w-2xl mx-auto flex flex-col space-y-4">
+                <button id="cat-angkor" onclick="selectCategory('angkor')" class="category-card w-full bg-white rounded-xl p-5 text-left border-2 border-gray-100 shadow-sm hover:border-gold-500 hover:shadow-md cursor-pointer transition flex items-center justify-between group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full bg-gold-100 flex items-center justify-center text-gold-600 font-bold text-lg group-hover:bg-gold-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-chess-king"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gold-600 font-bold text-lg group-hover:text-gold-700">ឈុតសម័យអង្គរ</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm">រចនាបថប្រណីត បែបប្រវត្តិសាស្ត្រ</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gold-600 group-hover:translate-x-1 transition"></i>
+                </button>
+
+                <button id="cat-wedding" onclick="selectCategory('wedding')" class="category-card w-full bg-white rounded-xl p-5 text-left border-2 border-gray-100 shadow-sm hover:border-gold-500 hover:shadow-md cursor-pointer transition flex items-center justify-between group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full bg-gold-100 flex items-center justify-center text-gold-600 font-bold text-lg group-hover:bg-gold-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gold-600 font-bold text-lg group-hover:text-gold-700">ឈុតមង្គលការ</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm">សម្រាប់ពិធីសិរីមង្គលអាពាហ៍ពិពាហ៍</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gold-600 group-hover:translate-x-1 transition"></i>
+                </button>
+
+                <button id="cat-jewelry" onclick="selectCategory('jewelry')" class="category-card w-full bg-white rounded-xl p-5 text-left border-2 border-gray-100 shadow-sm hover:border-gold-500 hover:shadow-md cursor-pointer transition flex items-center justify-between group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full bg-gold-100 flex items-center justify-center text-gold-600 font-bold text-lg group-hover:bg-gold-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gold-600 font-bold text-lg group-hover:text-gold-700">គ្រឿងអលង្ការបុរាណ</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm">អាវប៉ាក់ និងហូលផាមួង</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gold-600 group-hover:translate-x-1 transition"></i>
+                </button>
+
+                <button id="cat-popular" onclick="selectCategory('popular')" class="category-card w-full bg-white rounded-xl p-5 text-left border-2 border-gray-100 shadow-sm hover:border-gold-500 hover:shadow-md cursor-pointer transition flex items-center justify-between group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full bg-gold-100 flex items-center justify-center text-gold-600 font-bold text-lg group-hover:bg-gold-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-gold-600 font-bold text-lg group-hover:text-gold-700">ឈុតពេញនិយម</h3>
+                            <p class="text-gray-500 text-xs sm:text-sm">សម្លៀកបំពាក់ថ្មីៗបច្ចុប្បន្ន</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-gold-600 group-hover:translate-x-1 transition"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Section បង្ហាញបញ្ជីផលិតផល -->
+        <div id="products-section" class="mt-12 hidden">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-8 pb-4 border-b border-gray-200">
+                <div class="flex items-center space-x-3 mb-4 sm:mb-0">
+                    <span class="w-3 h-8 bg-gold-600 rounded-full inline-block"></span>
+                    <h3 id="category-display-title" class="text-xl sm:text-2xl font-bold text-gray-800">
+                        ឈុតសម័យអង្គរ
+                    </h3>
+                    <span id="product-count-badge" class="bg-gold-100 text-gold-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-gold-300">
+                        0 ឈុត
+                    </span>
+                </div>
+                
+                <button onclick="hideProducts()" class="text-xs sm:text-sm text-gray-500 hover:text-red-600 flex items-center space-x-1 transition">
+                    <i class="fa-solid fa-xmark"></i>
+                    <span>លាក់បញ្ជីផលិតផល</span>
+                </button>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamic Content Injection -->
+            </div>
+            
+            <div id="no-products" class="hidden text-center py-12 bg-white rounded-2xl border border-gray-100 p-8">
+                <i class="fa-solid fa-shirt text-4xl text-gray-300 mb-3"></i>
+                <p class="text-gray-500 font-medium">មិនទាន់មានទិន្នន័យសម្រាប់ប្រភេទនេះនៅឡើយទេ</p>
+            </div>
+        </div>
+
+        <!-- Section ទំនាក់ទំនង -->
+        <div id="contact-section" class="hidden max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-8 border border-gray-100 mt-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">ទំនាក់ទំនងយើងខ្ញុំ</h3>
+            <p class="text-gray-600 text-center mb-6">សម្រាប់ព័ត៌មានបន្ថែម ឬការកក់សម្លៀកបំពាក់ សូមទាក់ទងមកកាន់យើងខ្ញុំតាមរយៈព័ត៌មានខាងក្រោម៖</p>
+            <div class="space-y-4 text-gray-700">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-phone text-gold-600 text-lg w-6"></i>
+                    <span>លេខទូរស័ព្ទ៖ 089361345/010 345 678</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-location-dot text-gold-600 text-lg w-6"></i>
+                    <span>អាសយដ្ឋាន៖ ភូមិត្រៀក ស្រុកសៀមរាប សង្កាតសៀមរាប ខេត្តសៀមរាប,នៅក្នុងប្រទេសកម្ពុជា</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-envelope text-gold-600 text-lg w-6"></i>
+                    <span>អ៊ីមែល៖ nikadrawing718@gmail.com</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal សម្រាប់មើលព័ត៌មានលម្អិត -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl transform transition-all fade-in-up">
+            <div class="relative">
+                <img id="modal-img" src="" alt="" class="w-full h-64 object-cover">
+                <button onclick="closeModal()" class="absolute top-3 right-3 bg-white/80 hover:bg-white text-gray-700 w-9 h-9 rounded-full flex items-center justify-center shadow transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <span id="modal-category" class="inline-block text-xs font-semibold uppercase text-gold-600 tracking-wider mb-1">
+                    ប្រភេទ
+                </span>
+                <h3 id="modal-title" class="text-xl font-bold text-gray-900 mb-2"></h3>
+                <p id="modal-price" class="text-lg font-bold text-gold-600 mb-4"></p>
+                <p id="modal-desc" class="text-gray-600 text-sm mb-6 leading-relaxed">
+                    ឈុតបុរាណខ្មែររចនាយ៉ាងប្រណីតស័ក្តិសមសម្រាប់កម្មវិធីបុណ្យប្រពៃណី និងពិធីមង្គលការផ្សេងៗ។
+                </p>
+                
+                <div class="flex space-x-3">
+                    <button onclick="alertModal('កក់បានជោគជ័យ! ក្រុមការងារនឹងទាក់ទងទៅលោកអ្នកក្នុងពេលឆាប់ៗនេះ។')" 
+                            class="flex-1 bg-gold-600 hover:bg-gold-700 text-white font-semibold py-3 rounded-xl transition text-center shadow-md hover:shadow-lg">
+                        <i class="fa-solid fa-calendar-check mr-2"></i> កក់ទុក/ជួល
+                    </button>
+                    <button onclick="closeModal()" class="px-5 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition">
+                        បិទ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl z-50 hidden flex items-center space-x-3 transition">
+        <i class="fa-solid fa-circle-check text-gold-500 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10 mt-auto border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="text-center md:text-left">
+                    <span class="text-xl font-bold text-gold-500">បុរាណខ្មែរ Shop</span>
+                    <p class="text-xs text-gray-500 mt-1">រក្សាសិទ្ធិគ្រប់យ៉ាង &copy; 2026 - Khmer Traditional Clothes</p>
+                </div>
+                <div class="flex space-x-6 text-sm">
+                    <a href="javascript:void(0)" onclick="navigateTo('home')" class="hover:text-gold-500 transition">ទំព័រដើម</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('contact')" class="hover:text-gold-500 transition">ទំនាក់ទំនង</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+        // បញ្ជីទិន្នន័យសម្លៀកបំពាក់ ១០ មុខ ក្នុងប្រភេទនីមួយៗ (សរុប ៦០ ឈុត)
+        const productsData = [
+            // ១. ឈុតបុរស (១០ មុខ)
+            { id: 101, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតអាវបកបុរាណបុរស និងចងក្បិន', price: '$30.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/68/08/32/680832d521f3912abaa6edcdd6370b69.jpg' },
+            { id: 102, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតមន្ត្រីជាន់ខ្ពស់សម័យលង្វែក', price: '$40.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/9d/cb/19/9dcb1937d7e74761af3856bde7c9236b.jpg' },
+            { id: 103, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតកូនកំលោះបុរាណពណ៌មាស', price: '$50.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/fc/ce/a2/fccea266dfa1fe75ae4a03421a01eb79.jpg' },
+            { id: 104, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតអាវធំប្រពៃណី និងចងក្បិនបៃតង', price: '$35.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/0a/62/50/0a6250b4bc65323cea35ea3d829a5c53.jpg' },
+            { id: 105, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតព្រះរាជវង្សានុវង្សបុរស', price: '$60.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/65/1c/1f/651c1ff1ad953190150b2e3ab8070c20.jpg' },
+            { id: 106, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតអាវកតាំង និងសំពត់ចងក្បិន', price: '$28.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/18/da/a4/18daa4b0feb8a2eaa8813762e95a7b45.jpg' },
+            { id: 107, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតមន្ត្រីរាជការសម័យឧដុង្គ', price: '$45.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/53/bf/f5/53bff5bb3ecbd1c65c0b6d2757b0bfa9.jpg' },
+            { id: 108, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតកូនកំលោះសម័យទំនើបបែបបុរាណ', price: '$48.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/29/af/62/29af6299d0457016f67f2d214958ec29.jpg' },
+            { id: 109, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតអាវសូត្រចងក្បិនពណ៌ក្រហម', price: '$32.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/e5/91/fd/e591fdeac282e5c268216fc40c9a66a2.jpg' },
+            { id: 110, category: 'men', categoryName: 'ឈុតបុរស', title: 'ឈុតប្រពៃណីពិធីសែនព្រេន', price: '$30.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/00/6f/96/006f96034a04c884482e4c263fe883d9.jpg' },
+
+            // ២. ឈុតនារី (១០ មុខ)
+            { id: 201, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតអាវប៉ាក់ហូលផាមួងប្រណីត', price: '$35.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/74/98/63/749863320cd527179a6193391926bde7.jpg' },
+            { id: 202, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតស្បៃធំសម័យឧដុង្គ', price: '$45.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/4f/e4/24/4fe424d482a6770c33cd077c7f190096.jpg' },
+            { id: 203, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតអាវប៉ាក់ដៃវែង និងសំពត់ហូល', price: '$30.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/7c/21/1a/7c211a8212afd022dbf5d5d055c81ca9.jpg' },
+            { id: 204, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតស្បៃពាក់ក្លាស់ពណ៌មាស', price: '$50.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/41/f4/fe/41f4fe49e6e8bd2fabfa265cad396a7f.jpg' },
+            { id: 205, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតប្រពៃណីបុណ្យភ្ជុំបិណ្ឌ', price: '$25.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/8e/0a/cb/8e0acb556b379a5c6bc39f8833cf7bf7.jpg' },
+            { id: 206, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតអាវសូត្រសំពត់បត់ប្រណីត', price: '$38.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/ce/c4/ec/cec4ecc3200dfbc43375961e32311e37.jpg' },
+            { id: 207, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតនារីសម័យចតុមុខ', price: '$42.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/be/90/0a/be900a9296bd6cefac9c7de99478077e.jpg' },
+            { id: 208, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតស្បៃប៉ាក់ផ្កាស្រស់', price: '$40.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/11/e1/c9/11e1c9922422955cf335f54f6c097371.jpg' },
+            { id: 209, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតអាវកណ្តាលថ្ងៃ និងចងក្បិន', price: '$32.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/66/59/96/665996b41533c6f99c9be4e7bf7fc7e5.jpg' },
+            { id: 210, category: 'women', categoryName: 'ឈុតនារី', title: 'ឈុតសម្លៀកបំពាក់ស្រទន់ប្រពៃណី', price: '$28.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/1f/14/36/1f1436f2b8d29f57f18413760e483003.jpg' },
+
+            // ៣. ឈុតសម័យអង្គរ (១០ មុខ)
+            { id: 301, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតអប្សរាសម័យអង្គរប្រណីត', price: '$35.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/87/d5/fd/87d5fdd85119680eebca00cac7bd76f6.jpg' },
+            { id: 302, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតអប្សរាបុរាណពណ៌មាស', price: '$40.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/df/7d/b5/df7db5e96b74adc45b13fbbb67715e6e.jpg' },
+            { id: 303, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតទេពអប្សរាព្រះលាន', price: '$45.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/c3/f7/75/c3f775812652c51a790fb1971b29b43b.jpg' },
+            { id: 304, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតសម័យអង្គរនារីជាន់ខ្ពស់', price: '$38.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/98/bb/6f/98bb6f607f9dabc85b33bc0b0d9b5ca4.jpg' },
+            { id: 305, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតមហាក្សត្រសម័យអង្គរ', price: '$65.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/1d/43/be/1d43be92ccf4fd8cba74640818b53d82.jpg' },
+            { id: 306, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតមេទ័ពបុរាណសម័យអង្គរ', price: '$55.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/14/04/f9/1404f9cb5d4467dd0ebc1c37809c75b0.jpg' },
+            { id: 307, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតទេពធីតាអង្គរវត្ត', price: '$48.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/e4/b8/cf/e4b8cf53dceb880e14ea21e77ca9d6ef.jpg' },
+            { id: 308, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតអ្នករបាំប្រាសាទបាយ័ន', price: '$42.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/a9/0d/34/a90d343fd9ead7f13e5a8e88887c2a52.jpg' },
+            { id: 309, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតព្រះនាងឥន្ទ្រទេវី', price: '$70.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/3d/e7/94/3de794d816ca7c49ccca2922240911a6.jpg' },
+            { id: 310, category: 'angkor', categoryName: 'ឈុតសម័យអង្គរ', title: 'ឈុតព្រះនាងជ័យរាជទេវី', price: '$68.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/b4/f4/71/b4f47163453f2cb714918e4c532406a9.jpg' },
+
+            // ៤. ឈុតមង្គលការ (១០ មុខ)
+            { id: 401, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតអាពាហ៍ពិពាហ៍បុរាណពណ៌មាស', price: '$80.00 / កញ្ចប់', image: 'https://i.pinimg.com/1200x/f4/b4/1b/f4b41b70dde0bf2b0e9eb3575136b203.jpg' },
+            { id: 402, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតកូនក្រមុំហូលផាមួងសម័យលង្វែក', price: '$65.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/6f/78/49/6f7849c4b1554811176c57d24dc53fe0.jpg' },
+            { id: 403, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតកូនកំលោះកូនក្រមុំសម័យចតុមុខ', price: '$120.00 / កញ្ចប់', image: 'https://i.pinimg.com/736x/6e/93/28/6e932841b89b455f0210368fde43dff5.jpg' },
+            { id: 404, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតអាពាហ៍ពិពាហ៍ពណ៌ផ្កាឈូកបុរាណ', price: '$75.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/01/65/8a/01658af1694e93a17598e4ffa1dd0f7a.jpg' },
+            { id: 405, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតកាត់សក់មង្គលការបុរាណ', price: '$50.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/39/06/5e/39065ec5e47485840b3680e93cf7d02e.jpg' },
+            { id: 406, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតផ្ទះមហាពិធីអាពាហ៍ពិពាហ៍', price: '$90.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/6b/a3/69/6ba369627109b10219bd8fbda7eff2b5.jpg' },
+            { id: 407, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតសែនផ្ទឹមពណ៌ក្រហមសូត្រ', price: '$60.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/a6/2f/02/a62f026538d9c0e297c55a78a839699c.jpg' },
+            { id: 408, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតកូនក្រមុំស្បៃវែងស៊េរីថ្មី', price: '$85.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/10/2e/7f/102e7f58d05cca42945b87251c82deb0.jpg' },
+            { id: 409, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតមង្គលការសម័យប៉ោយប៉ែត', price: '$70.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/84/12/62/841262fcd0ea08718788215da0630aca.jpg' },
+            { id: 410, category: 'wedding', categoryName: 'ឈុតមង្គលការ', title: 'ឈុតអាពាហ៍ពិពាហ៍រចនាមាសសុទ្ធ', price: '$150.00 / កញ្ចប់', image: 'https://i.pinimg.com/1200x/8c/1f/c0/8c1fc0ad64e41049572a0f0597bfc423.jpg' },
+
+            // ៥. គ្រឿងអលង្ការបុរាណ (១០ មុខ)
+            { id: 501, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ឈុតគ្រឿងអលង្ការមាសបុរាណ', price: '$50.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/79/3b/8f/793b8f0898007316d58d71d2cb1eefd4.jpg' },
+            { id: 502, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'មកុដអប្សរាមាសប្រណីត', price: '$30.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/b6/c2/90/b6c2909141e855ad7b7c132c20a4154f.jpg' },
+            { id: 503, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ខ្សែក និងកងដៃបុរាណខ្មែរ', price: '$25.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/2d/8f/7c/2d8f7cd877fd108b2e635a3d6479cdc3.jpg' },
+            { id: 504, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ខ្សែក្រវ៉ាត់មាសបុរាណ', price: '$20.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/8e/21/2c/8e212c42c4e5c96fdebc34fb3050f234.jpg' },
+            { id: 505, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ស្និតសក់ និងចងការបុរាណ', price: '$15.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/8d/70/d5/8d70d52551100b871fa4a9cd512fcfbf.jpg' },
+            { id: 506, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ឈុតក្រវិល និងចិញ្ចៀនបុរាណ', price: '$18.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/82/2b/bc/822bbc7f250c6d5a459fec2010d0edd3.jpg' },
+            { id: 507, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'កងជើង និងកងដៃទេពធីតា', price: '$22.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/83/4b/55/834b55582b8fd7b55d9a9e522898f6db.jpg' },
+            { id: 508, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ខ្សែកឆ្លាក់ក្បាច់ភ្ញីទេស', price: '$28.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/f2/47/e1/f247e18718b672722e28585438a3dc80.jpg' },
+            { id: 509, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'មកុដកូនក្រមុំបុរាណ', price: '$35.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/01/f7/3f/01f73f20e7c927cce898b2800ca1b92e.jpg' },
+            { id: 510, category: 'jewelry', categoryName: 'គ្រឿងអលង្ការបុរាណ', title: 'ឈុតគ្រឿងប្រាក់បុរាណខ្មែរ', price: '$40.00 / ថ្ងៃ', image: 'https://i.pinimg.com/1200x/2b/f2/a4/2bf2a48ea08c3bb95aaa93f7fa93cd5e.jpg' },
+
+            // ៦. ឈុតពេញនិយម (១០ មុខ)
+            { id: 601, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតមកុដទេពធីតាប្រណីត', price: '$55.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/ab/4c/88/ab4c885069bd040fccda75939a5dbb52.jpg' },
+            { id: 602, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតព្រះនាងសុវណ្ណមច្ឆា', price: '$48.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/a9/29/6e/a9296ed51dff2d0e55029a1a6e264382.jpg' },
+            { id: 603, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតបុរាណច្នៃម៉ូដទាន់សម័យ', price: '$42.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/b9/bb/1a/b9bb1a3db7dffc1c45af2e60887523fb.jpg' },
+            { id: 604, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតប្រពៃណីចូលឆ្នាំថ្មី', price: '$35.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/bf/93/27/bf93277368471dee8a9f89bafe550999.jpg' },
+            { id: 605, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតសម្តែងរបាំប្រពៃណី', price: '$38.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/eb/6f/8f/eb6f8f7c01a138204905deea4c703f82.jpg' },
+            { id: 606, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតថតរូប Pre-wedding បុរាណ', price: '$60.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/ec/9b/ec/ec9becaba76af6819ce52d0c6a58762b.jpg' },
+            { id: 607, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតអប្សរាតូចសម្រាប់យុវវ័យ', price: '$30.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/da/84/44/da84441f753d9d781f1a8a79b7bd5a80.jpg' },
+            { id: 608, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតសម្លៀកបំពាក់ក្សត្រីសម័យថ្មី', price: '$50.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/58/81/29/5881291c53506bde9ec3db4fe167f74f.jpg' },
+            { id: 609, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតបុរាណពណ៌ខៀវស្រស់', price: '$36.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/6e/1b/f1/6e1bf14b2e4fdfef9d63310342c9159e.jpg' },
+            { id: 610, category: 'popular', categoryName: 'ឈុតពេញនិយម', title: 'ឈុតបុរាណប្រចាំហាងតារាល្បី', price: '$65.00 / ថ្ងៃ', image: 'https://i.pinimg.com/736x/8d/02/ea/8d02eafc8dfbdd366860096f8351d1da.jpg' }
+        ];
+
+        const categoryTitles = {
+            'home': 'ទំព័រដើម',
+            'men': 'ឈុតបុរស',
+            'women': 'ឈុតនារី',
+            'wedding': 'ឈុតអាពាហ៍ពិពាហ៍',
+            'angkor': 'ឈុតសម័យអង្គរ',
+            'jewelry': 'គ្រឿងអលង្ការបុរាណ',
+            'popular': 'ឈុតពេញនិយម'
+        };
+
+        function navigateTo(pageKey) {
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active-nav'));
+            const activeNav = document.getElementById(`nav-${pageKey}`);
+            if (activeNav) activeNav.classList.add('active-nav');
+
+            const heroBanner = document.getElementById('hero-banner');
+            const categorySection = document.getElementById('category-selection-section');
+            const contactSection = document.getElementById('contact-section');
+            const productsSection = document.getElementById('products-section');
+
+            document.getElementById('mobile-menu').classList.add('hidden');
+
+            if (pageKey === 'home') {
+                heroBanner.classList.remove('hidden');
+                categorySection.classList.remove('hidden');
+                contactSection.classList.add('hidden');
+                productsSection.classList.add('hidden');
+                document.querySelectorAll('.category-card').forEach(card => card.classList.remove('active'));
+            } else if (pageKey === 'contact') {
+                heroBanner.classList.add('hidden');
+                categorySection.classList.add('hidden');
+                productsSection.classList.add('hidden');
+                contactSection.classList.remove('hidden');
+            } else {
+                heroBanner.classList.add('hidden');
+                categorySection.classList.add('hidden');
+                contactSection.classList.add('hidden');
+                renderProducts(pageKey);
+            }
+        }
+
+        function selectCategory(catId) {
+            document.querySelectorAll('.category-card').forEach(card => card.classList.remove('active'));
+            const activeCard = document.getElementById(`cat-${catId}`);
+            if (activeCard) activeCard.classList.add('active');
+
+            renderProducts(catId);
+        }
+
+        function renderProducts(catId, searchQuery = '') {
+            const container = document.getElementById('products-section');
+            const grid = document.getElementById('product-grid');
+            const titleElem = document.getElementById('category-display-title');
+            const badgeElem = document.getElementById('product-count-badge');
+            const noProductsElem = document.getElementById('no-products');
+
+            let filtered = [];
+            if (searchQuery) {
+                filtered = productsData.filter(item => 
+                    item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                    item.categoryName.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+                titleElem.innerText = `លទ្ធផលស្វែងរក: "${searchQuery}"`;
+            } else {
+                filtered = productsData.filter(item => item.category === catId);
+                titleElem.innerText = categoryTitles[catId] || 'បញ្ជីសម្លៀកបំពាក់';
+            }
+
+            badgeElem.innerText = `${filtered.length} ឈុត`;
+            grid.innerHTML = '';
+
+            if (filtered.length === 0) {
+                noProductsElem.classList.remove('hidden');
+            } else {
+                noProductsElem.classList.add('hidden');
+                filtered.forEach(item => {
+                    const cardHtml = `
+                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group flex flex-col justify-between fade-in-up">
+                            <div class="relative overflow-hidden h-72 bg-gray-100">
+                                <img src="${item.image}" alt="${item.title}" onerror="this.src='${item.fallback}'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-medium">
+                                    ${item.categoryName}
+                                </span>
+                            </div>
+                            <div class="p-5 flex flex-col flex-grow justify-between">
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-base mb-2 group-hover:text-gold-600 transition line-clamp-1">
+                                        ${item.title}
+                                    </h4>
+                                    <p class="text-gold-600 font-bold text-lg mb-4">${item.price}</p>
+                                </div>
+                                <button onclick="openModal(${item.id})" class="w-full bg-gray-900 hover:bg-gold-600 text-white text-sm font-semibold py-2.5 rounded-lg transition duration-200 flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                    <span>មើលលម្អិត / កក់ជួល</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += cardHtml;
+                });
+            }
+
+            container.classList.remove('hidden');
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function hideProducts() {
+            navigateTo('home');
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            const query = document.getElementById('search-input').value.trim();
+            if (query) {
+                document.getElementById('category-selection-section').classList.add('hidden');
+                renderProducts(null, query);
+            }
+        }
+
+        function openModal(productId) {
+            const item = productsData.find(p => p.id === productId);
+            if (!item) return;
+
+            document.getElementById('modal-img').src = item.image;
+            document.getElementById('modal-img').onerror = function() { this.src = item.fallback; };
+            document.getElementById('modal-category').innerText = item.categoryName;
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-price').innerText = `តម្លៃ: ${item.price}`;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        function alertModal(msg) {
+            closeModal();
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => { toast.classList.add('hidden'); }, 3500);
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
